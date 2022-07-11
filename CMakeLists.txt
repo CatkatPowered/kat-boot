@@ -3,6 +3,7 @@ project(kat-boot)
 
 set(CMAKE_C_STANDARD 23)
 
+# 设置CMake所需要的包
 find_package(LLVM REQUIRED CONFIG)
 find_package(OpenSSL REQUIRED)
 
