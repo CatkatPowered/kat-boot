@@ -5,7 +5,6 @@
 #include "modules/UpdateManager/UpdateManager.h"
 
 int main() {
-    UpdateManager updateManager;
-    updateManager.UpdateManagerInit();
+    UpdateManager::UpdateManagerInit();
     return 0;
 }

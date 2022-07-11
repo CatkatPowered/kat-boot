@@ -9,13 +9,13 @@
 class UpdateManager {
     // 初始化更新模块
 public:
-    void UpdateManagerInit();
+    static void UpdateManagerInit();
     // 检查是否为最新版本
 private:
-    std::string checkUpdate();
+    static std::string checkUpdate();
     // 下载指定版本
 private:
-    void doUpdate(std::string commitHash);
+    static void doUpdate(std::string version);
 };
 
 
