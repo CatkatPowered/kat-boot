@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.22)
 project(kat-boot)
 
-set(CMAKE_C_STANDARD 23)
+set(CMAKE_CXX_STANDARD 23)
 
 # 设置CMake所需要的包
 find_package(LLVM REQUIRED CONFIG)
@@ -20,7 +20,7 @@ add_executable(
         kat-boot main.cpp
         modules/ConfigManager/ConfigManager.cpp
         modules/UpdateManager/UpdateManager.cpp
-)
+        modules/Utils/toml.h modules/CertManager/CertManager.cpp modules/CertManager/CertManager.h)
 
 llvm_map_components_to_libnames(llvm_libs support core irreader)
 
