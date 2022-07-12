@@ -12,10 +12,11 @@ public:
     static void UpdateManagerInit();
     // 检查是否为最新版本
 private:
-    static std::string checkUpdate();
+    static std::string checkUpdate(std::string repo);
     // 下载指定版本
 private:
-    static void doUpdate(std::string version);
+    static void doKatBootUpdate(std::string version);
+    static void doKatServerUpdate(std::string version);
 };
 
 

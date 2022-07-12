@@ -1,0 +1,6 @@
+[boot]
+kat_boot_version = "0.0.1"
+kat_server_version = "0.0.1"
+
+[cert]
+generate_cert=true

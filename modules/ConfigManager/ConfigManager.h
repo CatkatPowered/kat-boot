@@ -6,14 +6,17 @@
 #define KAT_BOOT_CONFIGMANAGER_H
 
 #include <string>
+#include "../Utils/toml.h"
 
 class ConfigManager {
 public:
-    static std::string REPO_BASE_URL;
-    static std::string VERSION;
+    static std::string KAT_BOOT_REPO_BASE_URL;
+    static std::string KAT_SERVER_REPO_BASE_URL;
+    static std::string KAT_BOOT_VERSION;
+    static std::string KAT_SERVER_VERSION;
 
 private:
-    static std::string getVersion();
+    static toml::table loadConfig();
 };
 
 
