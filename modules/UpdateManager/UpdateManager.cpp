@@ -37,10 +37,57 @@ std::string UpdateManager::checkUpdate(std::string repo) {
     return jsonBody["tag_name"];
 }
 
+// TODO: 为katserver和katboot放出一个release进行测试
+// WARNING: 以下代码未进行测试！！
 void UpdateManager::doKatBootUpdate(std::string version) {
+#ifdef linux
+    std::string fileName = "kat-boot";
+#endif
+#ifdef _WIN32
+    std::string fileName = "kat-boot.exe";
+#endif
+    httplib::Client client("https://api.github.com");
+    auto response = client.Get(("/repos" + ConfigManager::KAT_BOOT_REPO_BASE_URL + "/releases/latest").c_str());
 
+    nlohmann::json jsonBody = nlohmann::json::parse(response->body);
+    std::string downloadPath;
+    for (int i = 0; i < jsonBody["assets"].size(); ++i) {
+        if (jsonBody["assets"][i]["name"] != fileName) {
+            continue;
+        } else {
+            downloadPath = jsonBody["assets"][i]["browser_download_url"].get<std::string>().erase(0, 17);
+            break;
+        }
+    }
+    httplib::Client downloadClient("https://github.com");
+    std::ofstream file(fileName, std::ofstream::binary);
+    auto downloadResponse = downloadClient.Get(downloadPath.c_str(),
+                                               [&](const char *data, size_t data_length) {
+                                                   file.write(data, data_length);
+                                                   return true;
+                                               });
 }
 
 void UpdateManager::doKatServerUpdate(std::string version) {
+    std::string fileName = "kat-server.jar";
+    httplib::Client client("https://api.github.com");
+    auto response = client.Get(("/repos" + ConfigManager::KAT_SERVER_REPO_BASE_URL + "/releases/latest").c_str());
 
+    nlohmann::json jsonBody = nlohmann::json::parse(response->body);
+    std::string downloadPath;
+    for (int i = 0; i < jsonBody["assets"].size(); ++i) {
+        if (jsonBody["assets"][i]["name"] != fileName) {
+            continue;
+        } else {
+            downloadPath = jsonBody["assets"][i]["browser_download_url"].get<std::string>().erase(0, 17);
+            break;
+        }
+    }
+    httplib::Client downloadClient("https://github.com");
+    std::ofstream file(fileName, std::ofstream::binary);
+    auto downloadResponse = downloadClient.Get(downloadPath.c_str(),
+                                               [&](const char *data, size_t data_length) {
+                                                   file.write(data, data_length);
+                                                   return true;
+                                               });
 }
